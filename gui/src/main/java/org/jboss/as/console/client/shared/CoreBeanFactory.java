@@ -25,6 +25,7 @@ package org.jboss.as.console.client.shared;
 import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanFactory;
 import org.jboss.as.console.client.administration.audit.AuditLogItem;
+import org.jboss.as.console.client.core.bootstrap.server.BootstrapServer;
 import org.jboss.as.console.client.core.settings.CommonSettings;
 import org.jboss.as.console.client.domain.model.Host;
 import org.jboss.as.console.client.domain.model.ProfileRecord;
@@ -285,7 +286,6 @@ public interface CoreBeanFactory {
     AutoBean<WorkmanagerPool> WorkmanagerPool();
     AutoBean<JcaConnectionManager> JcaConnectionManager();
 
-
     AutoBean<JacOrbSubsystem> jacORBSubsystem();
     AutoBean<JPADeployment> jpaDeployment();
 
@@ -294,11 +294,12 @@ public interface CoreBeanFactory {
     AutoBean<JGroupsTransport> jGroupsTransport();
 
     AutoBean<Path> path();
-
     AutoBean<Extension> extension();
 
     AutoBean<TXRecord> txRecord();
     AutoBean<TXParticipant> txParticipant();
+
+    AutoBean<BootstrapServer> bootstrapServer();
 
     // RBAC and related
     AutoBean<AuditLogItem> auditLogItem();

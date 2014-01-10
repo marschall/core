@@ -672,12 +672,23 @@ table {
   cursor: pointer;
 }
 
-.error-panel {
+.icon-panel {
   margin-left: 15px;
   margin-bottom: 10px;
   padding-left: 20px;
-  background-image: url(app/images/info/icn_info_red.png);
   background-repeat: no-repeat; float: left;
+}
+
+.error-panel:extend(.icon-panel) {
+  background-image: url(app/images/info/icn_info_red.png);
+}
+
+.info-panel:extend(.icon-panel) {
+  background-image: url(app/images/info/icn_info_blue.png);
+}
+
+.blank-panel:extend(.icon-panel) {
+  background-image: url(app/images/info/icn_info_blank.png);
 }
 
 /* CellTree customizations */

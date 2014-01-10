@@ -19,6 +19,11 @@
 
 package org.jboss.dmr.client.dispatch.impl;
 
+import static org.jboss.dmr.client.ModelDescriptionConstants.*;
+
+import java.util.List;
+import java.util.Map;
+
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -29,7 +34,6 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.inject.Inject;
 import org.jboss.as.console.client.rbac.ResourceAccessLog;
 import org.jboss.dmr.client.ModelNode;
 import org.jboss.dmr.client.Property;
@@ -37,11 +41,6 @@ import org.jboss.dmr.client.dispatch.ActionHandler;
 import org.jboss.dmr.client.dispatch.Diagnostics;
 import org.jboss.dmr.client.dispatch.DispatchError;
 import org.jboss.dmr.client.dispatch.DispatchRequest;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.jboss.dmr.client.ModelDescriptionConstants.*;
 
 /**
  * @author Heiko Braun
@@ -66,16 +65,18 @@ public class DMRHandler implements ActionHandler<DMRAction, DMRResponse> {
 
     private static long idCounter = 0;
 
-    private final RequestBuilder postRequestBuilder;
+    private RequestBuilder postRequestBuilder;
     private Diagnostics diagnostics = GWT.create(Diagnostics.class);
     private boolean trackInvocations = diagnostics.isEnabled();
     private DMREndpointConfig endpointConfig = GWT.create(DMREndpointConfig.class);
     private ResourceAccessLog resourceLog = ResourceAccessLog.INSTANCE;
 
-    @Inject
-    public DMRHandler()
-    {
-        postRequestBuilder = new RequestBuilder(RequestBuilder.POST, endpointConfig.getUrl());
+    public DMRHandler() {
+        setEndpoint(endpointConfig.getUrl());
+    }
+
+    public void setEndpoint(String url) {
+        postRequestBuilder = new RequestBuilder(RequestBuilder.POST, url);
         postRequestBuilder.setHeader(HEADER_ACCEPT, DMR_ENCODED);
         postRequestBuilder.setHeader(HEADER_CONTENT_TYPE, DMR_ENCODED);
         postRequestBuilder.setIncludeCredentials(true);

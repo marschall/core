@@ -15,9 +15,9 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.jboss.as.console.client.Console;
 import org.jboss.as.console.client.core.BootstrapContext;
 import org.jboss.ballroom.client.widgets.window.DefaultWindow;
-import org.jboss.dmr.client.dispatch.DispatchAsync;
 import org.jboss.gwt.flow.client.Control;
 import org.jboss.gwt.flow.client.Function;
 
@@ -38,7 +38,6 @@ public class BootstrapServerSetup implements Function<BootstrapContext> {
     private BootstrapContext context;
     private DefaultWindow window;
     private BootstrapServerDialog dialog;
-
 
     @Override
     public void execute(final Control<BootstrapContext> control) {
@@ -169,6 +168,8 @@ public class BootstrapServerSetup implements Function<BootstrapContext> {
         context.setProperty(DOMAIN_API, domainApi);
         context.setProperty(DEPLOYMENT_API, deploymentApi);
         context.setProperty(LOGOUT_API, logoutApi);
+
+        Console.MODULES.getDMRHandler().setEndpoint(domainApi);
     }
 
     private String getBaseUrl() {

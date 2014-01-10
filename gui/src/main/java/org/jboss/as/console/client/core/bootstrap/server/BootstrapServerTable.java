@@ -13,6 +13,8 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import org.jboss.as.console.client.Console;
+import org.jboss.as.console.client.rbac.NoGatekeeperContext;
+import org.jboss.ballroom.client.rbac.SecurityContext;
 import org.jboss.ballroom.client.widgets.tables.DefaultCellTable;
 import org.jboss.ballroom.client.widgets.tables.DefaultPager;
 import org.jboss.ballroom.client.widgets.tools.ToolButton;
@@ -46,7 +48,13 @@ public class BootstrapServerTable implements IsWidget
         layout.setStyleName("fill-layout-width");
 
         // toolbar
-        ToolStrip topLevelTools = new ToolStrip();
+        ToolStrip topLevelTools = new ToolStrip() {
+            @Override
+            protected SecurityContext getSecurityContext() {
+                // At this point there's we do not have any presenters in place
+                return new NoGatekeeperContext();
+            }
+        };
         topLevelTools.addToolButtonRight(new ToolButton(Console.CONSTANTS.common_label_add(), new ClickHandler()
         {
             @Override
